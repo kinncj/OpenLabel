@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProject } from "@/ui/hooks/useProject";
 import { useUiStore } from "@/ui/stores/uiStore";
+import { AppHeader } from "@/ui/components/common/AppHeader";
 import { ProjectCard } from "@/ui/components/ProjectList/ProjectCard";
 import { ImportDropzone } from "@/ui/components/ImportDropzone/ImportDropzone";
 
@@ -35,28 +35,21 @@ export function ProjectList() {
     router.push(`/workspace?id=${id}`);
   }
 
+  const headerActions = (
+    <div style={{ display: "flex", gap: 10, marginLeft: "auto" }}>
+      <button type="button" onClick={() => setImportDialogOpen(true)} style={secondaryBtn}>
+        Import ZIP
+      </button>
+      <button type="button" onClick={() => setCreateProjectDialogOpen(true)} style={primaryBtn}>
+        + New Project
+      </button>
+    </div>
+  );
+
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 24px" }}>
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
-        <Image src="/logo.png" alt="OpenLabel" width={160} height={50} style={{ objectFit: "contain" }} priority />
-        <div style={{ display: "flex", gap: 10 }}>
-          <button
-            type="button"
-            onClick={() => setImportDialogOpen(true)}
-            style={secondaryBtn}
-          >
-            Import ZIP
-          </button>
-          <button
-            type="button"
-            onClick={() => setCreateProjectDialogOpen(true)}
-            style={primaryBtn}
-          >
-            + New Project
-          </button>
-        </div>
-      </div>
+    <>
+      <AppHeader>{headerActions}</AppHeader>
+      <div style={{ maxWidth: 800, margin: "0 auto", padding: "calc(var(--header-height) + 40px) 24px calc(var(--footer-height) + 24px)" }}>
 
       {/* Import dialog */}
       {importDialogOpen && (
@@ -118,7 +111,7 @@ export function ProjectList() {
 
       {/* Project grid */}
       {projects.length === 0 ? (
-        <div style={{ textAlign: "center", color: "#888", padding: "60px 0" }}>
+        <div style={{ textAlign: "center", color: "var(--color-text-muted)", padding: "60px 0" }}>
           <p>No projects yet. Create one or import a ZIP.</p>
         </div>
       ) : (
@@ -134,13 +127,14 @@ export function ProjectList() {
           ))}
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }
 
 const primaryBtn: React.CSSProperties = {
   padding: "8px 16px",
-  background: "#F47B20",
+  background: "var(--color-primary)",
   color: "#fff",
   border: "none",
   borderRadius: 5,
@@ -152,16 +146,16 @@ const primaryBtn: React.CSSProperties = {
 const secondaryBtn: React.CSSProperties = {
   padding: "8px 16px",
   background: "transparent",
-  color: "#ccc",
-  border: "1px solid #2d2d2d",
+  color: "var(--color-text-muted)",
+  border: "1px solid var(--color-border)",
   borderRadius: 5,
   cursor: "pointer",
   fontSize: 13,
 };
 
 const inputStyle: React.CSSProperties = {
-  background: "#111",
-  border: "1px solid #2d2d2d",
+  background: "var(--color-input-bg)",
+  border: "1px solid var(--color-border)",
   borderRadius: 4,
   color: "inherit",
   padding: "6px 8px",
@@ -171,16 +165,16 @@ const inputStyle: React.CSSProperties = {
 const dialogOverlay: React.CSSProperties = {
   position: "fixed",
   inset: 0,
-  background: "#00000088",
+  background: "rgba(0,0,0,0.55)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  zIndex: 100,
+  zIndex: 300,
 };
 
 const dialogBox: React.CSSProperties = {
-  background: "#1c1c1c",
-  border: "1px solid #2d2d2d",
+  background: "var(--color-surface)",
+  border: "1px solid var(--color-border)",
   borderRadius: 10,
   padding: "24px",
   width: "min(480px, 90vw)",

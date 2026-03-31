@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { withClientOnly } from "@/ui/hoc/withClientOnly";
 import { withErrorBoundary } from "@/ui/hoc/withErrorBoundary";
 import { WorkspaceLayout } from "@/ui/layouts/WorkspaceLayout";
+import { AppHeader } from "@/ui/components/common/AppHeader";
 import { ImageSidebar } from "@/ui/components/ImageSidebar/ImageSidebar";
 import { AnnotationPanel } from "@/ui/components/AnnotationPanel/AnnotationPanel";
 import { AnnotationCanvas } from "@/ui/components/AnnotationCanvas/AnnotationCanvas";
@@ -22,7 +22,6 @@ const ClientAnnotationPanel = withClientOnly(withErrorBoundary(AnnotationPanel))
 
 function WorkspaceInner() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const projectId = searchParams.get("id") ?? "";
   const { loadProject } = useProject();
   const { addImages } = useImages();
@@ -65,100 +64,74 @@ function WorkspaceInner() {
 
   const activeImage = activeProject?.images.find((img) => img.id === activeImageId) ?? null;
 
+  const headerContext = (
+    <>
+      <span style={{ fontWeight: 600, color: "var(--color-text)", fontSize: 13 }}>
+        {activeProject?.name ?? "Loading…"}
+      </span>
+      {activeImage && (
+        <span style={{ fontSize: 12, color: "var(--color-text-muted)" }}>
+          {activeImage.fileName} — {activeImage.width}×{activeImage.height}
+        </span>
+      )}
+    </>
+  );
+
   return (
-    <WorkspaceLayout>
-      <div
-        {...getRootProps()}
-        style={{ display: "flex", flex: 1, overflow: "hidden", position: "relative" }}
-      >
-        <input {...getInputProps()} aria-label="Drop images to add" />
+    <>
+      <AppHeader>{headerContext}</AppHeader>
+      <WorkspaceLayout>
+        <div
+          {...getRootProps()}
+          style={{ display: "flex", flex: 1, overflow: "hidden", position: "relative" }}
+        >
+          <input {...getInputProps()} aria-label="Drop images to add" />
 
-        {isDragActive && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "#F47B2022",
-              border: "3px dashed #F47B20",
-              zIndex: 50,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              pointerEvents: "none",
-            }}
-          >
-            <p style={{ fontSize: 20, color: "#F47B20", fontWeight: 600 }}>Drop images to add</p>
-          </div>
-        )}
-
-        <ClientImageSidebar />
-
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-          <div
-            style={{
-              height: 40,
-              borderBottom: "1px solid var(--color-border, #2d2d2d)",
-              display: "flex",
-              alignItems: "center",
-              padding: "0 12px",
-              gap: 12,
-              fontSize: 13,
-              color: "#888",
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => router.push("/")}
-              title="Back to projects"
-              aria-label="Back to projects"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 0,
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: "2px 4px",
-                borderRadius: 4,
-                opacity: 0.85,
-              }}
-            >
-              <Image src="/logo.png" alt="OpenLabel" width={90} height={28} style={{ objectFit: "contain" }} />
-            </button>
-            <span style={{ color: "#2d2d2d" }}>|</span>
-            <span style={{ fontWeight: 600, color: "#e0e0e0" }}>
-              {activeProject?.name ?? "Loading…"}
-            </span>
-            {activeImage && (
-              <span>
-                {activeImage.fileName} — {activeImage.width}×{activeImage.height}
-              </span>
-            )}
-          </div>
-
-          {activeImage && blobUrl ? (
-            <AnnotationCanvas image={activeImage} blobUrl={blobUrl} />
-          ) : (
+          {isDragActive && (
             <div
               style={{
-                flex: 1,
+                position: "absolute",
+                inset: 0,
+                background: "var(--color-primary-subtle)",
+                border: "3px dashed var(--color-primary)",
+                zIndex: 50,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#555",
-                fontSize: 14,
+                pointerEvents: "none",
               }}
             >
-              {activeProject?.images.length === 0
-                ? "Drop images anywhere to get started"
-                : "Select an image from the sidebar"}
+              <p style={{ fontSize: 20, color: "var(--color-primary)", fontWeight: 600 }}>Drop images to add</p>
             </div>
           )}
-        </div>
 
-        <ClientAnnotationPanel />
-      </div>
-    </WorkspaceLayout>
+          <ClientImageSidebar />
+
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            {activeImage && blobUrl ? (
+              <AnnotationCanvas image={activeImage} blobUrl={blobUrl} />
+            ) : (
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "var(--color-text-dim)",
+                  fontSize: 14,
+                }}
+              >
+                {activeProject?.images.length === 0
+                  ? "Drop images anywhere to get started"
+                  : "Select an image from the sidebar"}
+              </div>
+            )}
+          </div>
+
+          <ClientAnnotationPanel />
+        </div>
+      </WorkspaceLayout>
+    </>
   );
 }
 

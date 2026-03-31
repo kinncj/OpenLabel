@@ -93,8 +93,8 @@ export function AnnotationCanvas({ image, blobUrl }: Props) {
           display: "flex",
           alignItems: "center",
           gap: 2,
-          background: "#111111ee",
-          border: "1px solid #2d2d2d",
+          background: "var(--color-toolbar-bg)",
+          border: "1px solid var(--color-toolbar-border)",
           borderRadius: 8,
           padding: "4px 6px",
           backdropFilter: "blur(4px)",
@@ -113,7 +113,7 @@ export function AnnotationCanvas({ image, blobUrl }: Props) {
           </ToolBtn>
         ))}
 
-        <div style={{ width: 1, height: 20, background: "#2d2d2d", margin: "0 4px" }} />
+        <div style={{ width: 1, height: 20, background: "var(--color-toolbar-border)", margin: "0 4px" }} />
 
         {/* Zoom out */}
         <ToolBtn
@@ -127,7 +127,7 @@ export function AnnotationCanvas({ image, blobUrl }: Props) {
         <span
           style={{
             fontSize: 11,
-            color: "#aaa",
+            color: "var(--color-text-muted)",
             minWidth: 38,
             textAlign: "center",
             fontVariantNumeric: "tabular-nums",
@@ -211,9 +211,9 @@ function ToolBtn({
         width: 30,
         height: 30,
         borderRadius: 6,
-        border: active ? "1px solid #F47B20" : "1px solid transparent",
-        background: active ? "#F47B2022" : "transparent",
-        color: active ? "#F47B20" : "#aaa",
+        border: active ? "1px solid var(--color-primary)" : "1px solid transparent",
+        background: active ? "var(--color-primary-subtle)" : "transparent",
+        color: active ? "var(--color-primary)" : "var(--color-text-muted)",
         cursor: "pointer",
         padding: 0,
       }}

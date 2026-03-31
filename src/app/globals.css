@@ -4,18 +4,50 @@
   box-sizing: border-box;
 }
 
+/* ── Layout tokens ────────────────────────────────────────────────────── */
 :root {
-  --color-bg: #0f0f0f;
-  --color-surface: #1c1c1c;
+  --header-height: 48px;
+  --footer-height: 36px;
+
+  /* Dark theme (default) */
+  color-scheme: dark;
+  --color-bg:             #0f0f0f;
+  --color-surface:        #1c1c1c;
   --color-surface-active: #252525;
-  --color-border: #2d2d2d;
-  --color-primary: #F47B20;
-  --color-text: #e0e0e0;
-  --color-text-muted: #888;
-  --color-error: #e6194b;
-  --color-canvas-bg: #111111;
+  --color-border:         #2d2d2d;
+  --color-primary:        #F47B20;
+  --color-primary-hover:  #D96810;
+  --color-primary-subtle: rgba(244, 123, 32, 0.13);
+  --color-text:           #e0e0e0;
+  --color-text-muted:     #888;
+  --color-text-dim:       #555;
+  --color-error:          #e6194b;
+  --color-canvas-bg:      #111111;
+  --color-input-bg:       #111;
+  --color-toolbar-bg:     rgba(13, 13, 13, 0.92);
+  --color-toolbar-border: #2d2d2d;
 }
 
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg:             #f2f2f2;
+  --color-surface:        #ffffff;
+  --color-surface-active: #f0f0f0;
+  --color-border:         #e0e0e0;
+  --color-primary:        #E06010;
+  --color-primary-hover:  #C95510;
+  --color-primary-subtle: rgba(224, 96, 16, 0.12);
+  --color-text:           #1a1a1a;
+  --color-text-muted:     #666;
+  --color-text-dim:       #999;
+  --color-error:          #c0392b;
+  --color-canvas-bg:      #e0e0e0;
+  --color-input-bg:       #fafafa;
+  --color-toolbar-bg:     rgba(255, 255, 255, 0.94);
+  --color-toolbar-border: #d0d0d0;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
 html,
 body {
   margin: 0;
