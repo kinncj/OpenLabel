@@ -34,7 +34,7 @@ jobs:
         env:
           # If deploying to https://username.github.io/openlabel/ set this to /openlabel
           # If using a custom domain leave it empty
-          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH || '' }}
+          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH || '/openlabel' }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
