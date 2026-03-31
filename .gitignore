@@ -1,5 +1,6 @@
 node_modules
 .next
+.claude/settings.local.json
 out
 tsconfig.tsbuildinfo
 .env*
