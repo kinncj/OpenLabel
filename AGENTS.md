@@ -37,8 +37,9 @@ box editing, TP/FP review states, and lossless re-import.
 ## 3. Repository Structure (BusinessRepo)
 
 ```text
-/app                      Next.js app router pages (routing only)
-/app-openlabel            Business repo root — all domain + UI code lives here
+/src                      Business repo root — everything lives here
+  /app                    Next.js app router (routing only — thin wrappers)
+    /workspace            /workspace route
   /common
     /domain
       /dataset            Project, ImageRecord, ClassDef
@@ -71,9 +72,10 @@ box editing, TP/FP review states, and lossless re-import.
 Makefile
 ```
 
-> **Path alias:** `@/*` → `./app-openlabel/*` in both `tsconfig.json` and `vitest.config.ts`.
-> So `@/common/domain/...` resolves to `app-openlabel/common/domain/...` and
-> `@/ui/components/...` resolves to `app-openlabel/ui/components/...`.
+> **Path alias:** `@/*` → `./src/*` in both `tsconfig.json` and `vitest.config.ts`.
+> So `@/common/domain/...` resolves to `src/common/domain/...` and
+> `@/ui/components/...` resolves to `src/ui/components/...`.
+> Next.js auto-discovers `src/app/` as the app router — no `app/` at the project root.
 
 ---
 

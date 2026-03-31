@@ -18,7 +18,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "app-openlabel"),
+      "@": path.resolve(__dirname, "src"),
       // fflate's "module" field points to the browser ESM build which behaves
       // differently in jsdom. Force the Node.js CJS build for tests.
       "fflate": path.resolve(__dirname, "node_modules/fflate/lib/index.cjs"),

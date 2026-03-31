@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./app-openlabel/*"
+        "./src/*"
       ]
     },
     "plugins": [
@@ -34,8 +34,7 @@
   "include": [
     "*.ts",
     "*.tsx",
-    "app/**/*",
-    "app-openlabel/**/*",
+    "src/**/*",
     "next-env.d.ts",
     "tests/**/*",
     ".next/types/**/*.ts"
