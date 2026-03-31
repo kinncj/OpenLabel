@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { ArrowLeft } from "@phosphor-icons/react";
 import { withClientOnly } from "@/ui/hoc/withClientOnly";
 import { withErrorBoundary } from "@/ui/hoc/withErrorBoundary";
 import { WorkspaceLayout } from "@/ui/layouts/WorkspaceLayout";
@@ -21,6 +22,7 @@ const ClientAnnotationPanel = withClientOnly(withErrorBoundary(AnnotationPanel))
 
 function WorkspaceInner() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const projectId = searchParams.get("id") ?? "";
   const { loadProject } = useProject();
   const { addImages } = useImages();
@@ -104,6 +106,28 @@ function WorkspaceInner() {
               color: "#888",
             }}
           >
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              title="Back to projects"
+              aria-label="Back to projects"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                color: "#888",
+                fontSize: 12,
+                padding: "4px 6px",
+                borderRadius: 4,
+              }}
+            >
+              <ArrowLeft size={14} />
+              Projects
+            </button>
+            <span style={{ color: "#2a2a3e" }}>|</span>
             <span style={{ fontWeight: 600, color: "#e0e0e0" }}>
               {activeProject?.name ?? "Loading…"}
             </span>
