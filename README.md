@@ -2,6 +2,10 @@
   <img src="assets/openlabel_no_bg.png" alt="OpenLabel" width="280" />
 </p>
 
+<p align="center">
+  <a href="https://kinncj.github.io/OpenLabel/">https://kinncj.github.io/OpenLabel/</a>
+</p>
+
 Browser-only YOLO detection dataset annotator. No backend, no accounts, no upload. Your images stay on your machine — everything lives in IndexedDB.
 
 ---
