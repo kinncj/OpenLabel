@@ -1,3 +1,4 @@
+docs/sessions/
 node_modules
 .next
 .claude/settings.local.json
