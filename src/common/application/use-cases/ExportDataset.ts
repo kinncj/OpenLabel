@@ -84,8 +84,8 @@ export async function exportDataset(
     entries.set("data.yaml", serializeToDataYaml(fullProject, hasTest));
   }
 
-  // Label Studio JSON (predictions format)
-  if (project.exportOptions.includeLabelStudio) {
+  // Label Studio JSON (predictions format) — always included
+  {
     entries.set("labelstudio.json", serializeToLabelStudio(fullProject));
 
     // Helper script: rewrites relative image paths to http://localhost:PORT/…
