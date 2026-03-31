@@ -82,7 +82,7 @@ describe("createProject", () => {
     expect(project.exportOptions).toEqual({
       includeYaml: true,
       includeTxtLabels: true,
-      includeLabelStudio: false,
+      includeLabelStudio: true,
       blockIncompleteImages: true,
     });
   });

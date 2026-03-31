@@ -8,8 +8,7 @@ export const ImageReviewStateSchema = z.enum(["complete", "incomplete", "negativ
 export const ExportOptionsSchema = z.object({
   includeYaml: z.boolean(),
   includeTxtLabels: z.boolean(),
-  // default false for backward-compat with existing DB records that lack this field
-  includeLabelStudio: z.boolean().default(false),
+  includeLabelStudio: z.boolean().default(true),
   blockIncompleteImages: z.boolean(),
 });
 

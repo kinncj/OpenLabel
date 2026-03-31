@@ -20,7 +20,7 @@ export async function createProject(
     exportOptions: {
       includeYaml: true,
       includeTxtLabels: true,
-      includeLabelStudio: false,
+      includeLabelStudio: true,
       blockIncompleteImages: true,
     },
   };
