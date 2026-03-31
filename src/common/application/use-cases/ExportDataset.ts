@@ -89,6 +89,29 @@ export async function exportDataset(
     entries.set("labelstudio.json", serializeToLabelStudio(fullProject));
   }
 
+  // Python quickstart script (Ultralytics YOLO)
+  if (project.exportOptions.includeYaml) {
+    const quickstart = [
+      "# OpenLabel export — Ultralytics YOLO quickstart",
+      "# pip install ultralytics",
+      "from pathlib import Path",
+      "from ultralytics import YOLO",
+      "",
+      "HERE = Path(__file__).parent",
+      "",
+      'model = YOLO("yolov8n.pt")  # swap for yolov8s/m/l/x as needed',
+      "results = model.train(",
+      '    data=str(HERE / "data.yaml"),',
+      "    epochs=100,",
+      "    imgsz=640,",
+      "    batch=16,",
+      ")",
+      "print(f'Done — results saved to {results.save_dir}')",
+      "",
+    ].join("\n");
+    entries.set("quickstart.py", quickstart);
+  }
+
   // meta/project.json — full round-trip metadata including UI state
   const metaProject = { ...project, images };
   entries.set("meta/project.json", JSON.stringify(metaProject, null, 2));

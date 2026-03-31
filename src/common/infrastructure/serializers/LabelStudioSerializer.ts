@@ -80,7 +80,7 @@ export function serializeToLabelStudio(project: Project): string {
 
     return {
       id: taskIdx + 1,
-      data: { image: image.fileName },
+      data: { image: `images/${image.split}/${image.fileName}` },
       annotations: [{ result: results, was_cancelled: false }],
     };
   });

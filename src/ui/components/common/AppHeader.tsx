@@ -34,7 +34,7 @@ export function AppHeader({ children }: Props) {
       {/* Logo → home */}
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", flexShrink: 0 }}>
         <Image
-          src="/logo-icon.png"
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo-icon.png`}
           alt="OpenLabel"
           width={28}
           height={28}

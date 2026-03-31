@@ -23,7 +23,7 @@ export function serializeToNdjson(project: Project): string {
     lines.push(
       JSON.stringify({
         type: "image",
-        file: image.fileName,
+        file: `images/${image.split}/${image.fileName}`,
         split: image.split,
         width: image.width,
         height: image.height,

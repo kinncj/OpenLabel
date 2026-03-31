@@ -97,15 +97,20 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
   const onBoxPointerDown = useCallback(
     (e: React.PointerEvent, boxId: string) => {
       if (e.button !== 0) return;
+
+      // Draw mode: let the event bubble to the SVG root so a new box can be drawn over this one
+      if (tool === "draw") return;
+
       e.stopPropagation();
 
+      // Pan tool or Ctrl held → pan, don't move box
+      if (tool === "pan" || e.ctrlKey || e.metaKey) return;
+
+      // Select mode: select and start move
       const box = activeImage?.annotations.find((a) => a.id === boxId);
       if (!box || box.locked) return;
 
       selectBox(boxId);
-
-      // Pan tool or Ctrl held → don't start move, fall through to pan
-      if (tool === "pan" || e.ctrlKey || e.metaKey) return;
 
       const svgEl = (e.currentTarget as SVGElement).ownerSVGElement!;
       const norm = clientToNorm(e, svgEl as SVGSVGElement);
@@ -127,9 +132,13 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
   const onHandlePointerDown = useCallback(
     (e: React.PointerEvent, boxId: string, handle: HandleType) => {
       if (e.button !== 0) return;
+
+      // Only select mode can resize boxes
+      if (tool !== "select") return;
+
       e.stopPropagation();
 
-      if (tool === "pan" || e.ctrlKey || e.metaKey) return;
+      if (e.ctrlKey || e.metaKey) return;
 
       const box = activeImage?.annotations.find((a) => a.id === boxId);
       if (!box || box.locked) return;

@@ -94,7 +94,7 @@ describe("NdjsonSerializer", () => {
   it("only includes tp boxes in annotations", () => {
     const ndjson = serializeToNdjson(baseProject);
     const { images } = parseNdjson(ndjson);
-    const img1 = images.find((i) => i.file === "img1.jpg")!;
+    const img1 = images.find((i) => i.file === "images/train/img1.jpg")!;
     expect(img1.annotations.boxes).toHaveLength(1);
     // The single tp box has classId 0
     expect(img1.annotations.boxes[0]?.[0]).toBe(0);
@@ -103,7 +103,7 @@ describe("NdjsonSerializer", () => {
   it("fp boxes are absent", () => {
     const ndjson = serializeToNdjson(baseProject);
     const { images } = parseNdjson(ndjson);
-    const img1 = images.find((i) => i.file === "img1.jpg")!;
+    const img1 = images.find((i) => i.file === "images/train/img1.jpg")!;
     // Only 1 box (tp), not the fp or ignore ones
     expect(img1.annotations.boxes).toHaveLength(1);
   });
@@ -111,7 +111,7 @@ describe("NdjsonSerializer", () => {
   it("negative image has empty boxes array", () => {
     const ndjson = serializeToNdjson(baseProject);
     const { images } = parseNdjson(ndjson);
-    const img2 = images.find((i) => i.file === "img2.jpg")!;
+    const img2 = images.find((i) => i.file === "images/val/img2.jpg")!;
     expect(img2.annotations.boxes).toEqual([]);
   });
 

@@ -65,7 +65,8 @@ export async function importDataset(
       classNames = dataset.class_names;
       ndjsonImages = ndjsonLines.map((line) => ({
         id: uuidv4(),
-        fileName: line.file,
+        // file may be a zip-relative path like "images/train/foo.jpg" — keep only the basename
+        fileName: line.file.replace(/\\/g, "/").split("/").pop() ?? line.file,
         storedBlobKey: "",
         width: line.width,
         height: line.height,
