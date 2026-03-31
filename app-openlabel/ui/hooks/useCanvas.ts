@@ -34,7 +34,6 @@ function clamp(v: number, lo: number, hi: number) {
   return Math.max(lo, Math.min(hi, v));
 }
 
-/** Compute new box geometry while dragging by (dx, dy) in normalized coords. */
 function applyMove(
   orig: BoxAnnotation,
   dx: number,
@@ -48,14 +47,12 @@ function applyMove(
   };
 }
 
-/** Compute new box geometry while resizing a handle by (dx, dy) in normalized coords. */
 function applyResize(
   orig: BoxAnnotation,
   handle: HandleType,
   dx: number,
   dy: number,
 ): { x: number; y: number; w: number; h: number } {
-  // Work in absolute edge coords
   let left = orig.x - orig.w / 2;
   let top = orig.y - orig.h / 2;
   let right = orig.x + orig.w / 2;
@@ -73,8 +70,8 @@ function applyResize(
 
 export function useCanvas(imageWidth: number, imageHeight: number) {
   const {
-    zoom, panX, panY, drawing, selectedBoxId,
-    setZoom, setPan, startDraw, updateDraw, commitDraw, cancelDraw,
+    zoom, panX, panY, drawing, selectedBoxId, tool,
+    setZoom, setPan, setTool, startDraw, updateDraw, commitDraw, cancelDraw,
     selectBox, setEditingBox,
   } = useCanvasStore();
 
@@ -83,7 +80,6 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
   const dragRef = useRef<DragOp | null>(null);
   const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
 
-  // Convert client → SVG → normalized image coords
   function clientToNorm(
     e: { clientX: number; clientY: number },
     svgEl: SVGSVGElement,
@@ -97,7 +93,7 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
     };
   }
 
-  // ─── Box body pointer down (select + potential move) ────────────────────────
+  // ─── Box body pointer down ───────────────────────────────────────────────────
   const onBoxPointerDown = useCallback(
     (e: React.PointerEvent, boxId: string) => {
       if (e.button !== 0) return;
@@ -107,6 +103,9 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
       if (!box || box.locked) return;
 
       selectBox(boxId);
+
+      // Pan tool or Ctrl held → don't start move, fall through to pan
+      if (tool === "pan" || e.ctrlKey || e.metaKey) return;
 
       const svgEl = (e.currentTarget as SVGElement).ownerSVGElement!;
       const norm = clientToNorm(e, svgEl as SVGSVGElement);
@@ -121,7 +120,7 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
       (e.currentTarget as Element).setPointerCapture(e.pointerId);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeImage, selectBox, panX, panY, zoom, imageWidth, imageHeight],
+    [activeImage, selectBox, tool, panX, panY, zoom, imageWidth, imageHeight],
   );
 
   // ─── Handle pointer down (resize) ───────────────────────────────────────────
@@ -129,6 +128,8 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
     (e: React.PointerEvent, boxId: string, handle: HandleType) => {
       if (e.button !== 0) return;
       e.stopPropagation();
+
+      if (tool === "pan" || e.ctrlKey || e.metaKey) return;
 
       const box = activeImage?.annotations.find((a) => a.id === boxId);
       if (!box || box.locked) return;
@@ -147,28 +148,45 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
       (e.currentTarget as Element).setPointerCapture(e.pointerId);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeImage, panX, panY, zoom, imageWidth, imageHeight],
+    [activeImage, tool, panX, panY, zoom, imageWidth, imageHeight],
   );
 
-  // ─── SVG root pointer down (draw or pan) ────────────────────────────────────
+  // ─── SVG root pointer down ───────────────────────────────────────────────────
   const onPointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>, isOnBox: boolean) => {
+      // Middle button always pans
       if (e.button === 1) {
         dragRef.current = { kind: "pan" };
         lastPointerRef.current = { x: e.clientX, y: e.clientY };
         (e.target as Element).setPointerCapture(e.pointerId);
         return;
       }
-      if (e.button === 0 && !isOnBox) {
-        selectBox(null);
-        const norm = clientToNorm(e, e.currentTarget);
-        startDraw(norm.x, norm.y);
-        dragRef.current = { kind: "draw" };
-        (e.target as Element).setPointerCapture(e.pointerId);
+
+      if (e.button === 0) {
+        // Ctrl/Cmd held OR pan tool → pan
+        if (e.ctrlKey || e.metaKey || tool === "pan") {
+          selectBox(null);
+          dragRef.current = { kind: "pan" };
+          lastPointerRef.current = { x: e.clientX, y: e.clientY };
+          (e.target as Element).setPointerCapture(e.pointerId);
+          return;
+        }
+
+        if (!isOnBox && tool === "draw") {
+          selectBox(null);
+          const norm = clientToNorm(e, e.currentTarget);
+          startDraw(norm.x, norm.y);
+          dragRef.current = { kind: "draw" };
+          (e.target as Element).setPointerCapture(e.pointerId);
+        }
+
+        if (!isOnBox && tool === "select") {
+          selectBox(null);
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [panX, panY, zoom, imageWidth, imageHeight, startDraw, selectBox],
+    [tool, panX, panY, zoom, imageWidth, imageHeight, startDraw, selectBox],
   );
 
   // ─── Pointer move ────────────────────────────────────────────────────────────
@@ -268,7 +286,6 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
   // ─── Keyboard shortcuts ──────────────────────────────────────────────────────
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      // Don't fire when typing in a text input
       const tag = (e.target as HTMLElement).tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
 
@@ -287,14 +304,19 @@ export function useCanvas(imageWidth: number, imageHeight: number) {
       if (e.key === "-") {
         setZoom(Math.max(ZOOM_MIN, zoom / ZOOM_FACTOR));
       }
+      // Tool shortcuts
+      if (e.key === "b" || e.key === "B") setTool("draw");
+      if (e.key === "h" || e.key === "H") setTool("pan");
+      if (e.key === "v" || e.key === "V") setTool("select");
     },
-    [zoom, selectedBoxId, setZoom, cancelDraw, deleteBox, setEditingBox],
+    [zoom, selectedBoxId, setZoom, setTool, cancelDraw, deleteBox, setEditingBox],
   );
 
   return {
     zoom,
     panX,
     panY,
+    tool,
     drawing,
     selectedBoxId,
     onPointerDown,

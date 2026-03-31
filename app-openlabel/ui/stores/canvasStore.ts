@@ -4,6 +4,8 @@ import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
 import type { BoxAnnotation } from "@/common/domain/annotations/types";
 
+export type CanvasTool = "draw" | "pan" | "select";
+
 export type DrawingState = {
   startX: number;
   startY: number;
@@ -25,6 +27,7 @@ interface CanvasState {
   zoom: number;
   panX: number;
   panY: number;
+  tool: CanvasTool;
   selectedBoxId: string | null;
   drawing: DrawingState | null;
   editingBox: EditingBox | null;
@@ -32,6 +35,7 @@ interface CanvasState {
 
   setZoom: (zoom: number) => void;
   setPan: (x: number, y: number) => void;
+  setTool: (tool: CanvasTool) => void;
   selectBox: (id: string | null) => void;
   setActiveClass: (classId: number) => void;
   startDraw: (x: number, y: number) => void;
@@ -46,6 +50,7 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   zoom: 1,
   panX: 0,
   panY: 0,
+  tool: "draw",
   selectedBoxId: null,
   drawing: null,
   editingBox: null,
@@ -54,6 +59,8 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   setZoom: (zoom) => set({ zoom: Math.max(0.1, Math.min(20, zoom)) }),
 
   setPan: (panX, panY) => set({ panX, panY }),
+
+  setTool: (tool) => set({ tool }),
 
   selectBox: (id) => set({ selectedBoxId: id }),
 

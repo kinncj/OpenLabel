@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Question } from "@phosphor-icons/react";
 import { useProjectStore } from "@/ui/stores/projectStore";
 import { useUiStore } from "@/ui/stores/uiStore";
 import { useAnnotations } from "@/ui/hooks/useAnnotations";
@@ -8,6 +9,7 @@ import { useExport } from "@/ui/hooks/useExport";
 import { ClassManager } from "@/ui/components/AnnotationPanel/ClassManager";
 import { AnnotationStack } from "@/ui/components/AnnotationPanel/AnnotationStack";
 import { BoxProperties } from "@/ui/components/AnnotationPanel/BoxProperties";
+import { HelpModal } from "@/ui/components/common/HelpModal";
 
 type Tab = "classes" | "stack" | "box";
 
@@ -17,6 +19,7 @@ export function AnnotationPanel() {
   const { activeImage } = useAnnotations();
   const { doExport, exportWithOverride, dismissExportGate, blockedImages, exporting } = useExport();
   const [tab, setTab] = useState<Tab>("classes");
+  const [showHelp, setShowHelp] = useState(false);
 
   const panelStyle: React.CSSProperties = {
     width: 240,
@@ -30,14 +33,14 @@ export function AnnotationPanel() {
 
   return (
     <aside aria-label="Annotation panel" style={panelStyle}>
-      {/* Export button */}
-      <div style={{ padding: "8px 10px", borderBottom: "1px solid var(--color-border, #2a2a3e)" }}>
+      {/* Header: export + help */}
+      <div style={{ padding: "8px 10px", borderBottom: "1px solid var(--color-border, #2a2a3e)", display: "flex", gap: 6 }}>
         <button
           type="button"
           onClick={() => doExport()}
           disabled={exporting || !activeProject}
           style={{
-            width: "100%",
+            flex: 1,
             padding: "7px 0",
             background: "#4363d8",
             color: "#fff",
@@ -49,6 +52,26 @@ export function AnnotationPanel() {
           }}
         >
           {exporting ? "Exporting…" : "Export ZIP"}
+        </button>
+        <button
+          type="button"
+          aria-label="Help"
+          title="Help — how to annotate"
+          onClick={() => setShowHelp(true)}
+          style={{
+            width: 34,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "transparent",
+            border: "1px solid #2a2a3e",
+            borderRadius: 5,
+            cursor: "pointer",
+            color: "#888",
+            flexShrink: 0,
+          }}
+        >
+          <Question size={16} weight="bold" />
         </button>
       </div>
 
@@ -120,6 +143,9 @@ export function AnnotationPanel() {
       {activeImage && (
         <ImageReviewControls imageId={activeImage.id} reviewState={activeImage.reviewState} />
       )}
+
+      {/* Help modal */}
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
     </aside>
   );
 }
@@ -145,10 +171,16 @@ function ImageReviewControls({
     upsertImage({ ...img, reviewState: state });
   }
 
-  const states: typeof reviewState[] = ["complete", "incomplete", "negative"];
+  const STATE_LABELS: Record<typeof reviewState, string> = {
+    complete: "Done",
+    incomplete: "Todo",
+    negative: "Empty",
+  };
+
+  const states: (typeof reviewState)[] = ["complete", "incomplete", "negative"];
   return (
     <div style={{ padding: "8px 10px", borderTop: "1px solid var(--color-border, #2a2a3e)" }}>
-      <div style={{ fontSize: 11, color: "#888", marginBottom: 4 }}>Image review</div>
+      <div style={{ fontSize: 11, color: "#888", marginBottom: 4 }}>Image status</div>
       <div style={{ display: "flex", gap: 4 }}>
         {states.map((s) => (
           <button
@@ -167,7 +199,7 @@ function ImageReviewControls({
               cursor: "pointer",
             }}
           >
-            {s}
+            {STATE_LABELS[s]}
           </button>
         ))}
       </div>

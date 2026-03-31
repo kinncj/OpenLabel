@@ -100,4 +100,4 @@ Only `tp` (true-positive) boxes go into `dataset.ndjson` and YOLO txt. `fp` and 
 
 ## License
 
-MIT
+AGPLv3 — see [LICENSE](./LICENSE)
