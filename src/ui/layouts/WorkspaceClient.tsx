@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { ArrowLeft } from "@phosphor-icons/react";
+import Image from "next/image";
 import { withClientOnly } from "@/ui/hoc/withClientOnly";
 import { withErrorBoundary } from "@/ui/hoc/withErrorBoundary";
 import { WorkspaceLayout } from "@/ui/layouts/WorkspaceLayout";
@@ -78,8 +78,8 @@ function WorkspaceInner() {
             style={{
               position: "absolute",
               inset: 0,
-              background: "#4363d822",
-              border: "3px dashed #4363d8",
+              background: "#F47B2022",
+              border: "3px dashed #F47B20",
               zIndex: 50,
               display: "flex",
               alignItems: "center",
@@ -87,7 +87,7 @@ function WorkspaceInner() {
               pointerEvents: "none",
             }}
           >
-            <p style={{ fontSize: 20, color: "#4363d8", fontWeight: 600 }}>Drop images to add</p>
+            <p style={{ fontSize: 20, color: "#F47B20", fontWeight: 600 }}>Drop images to add</p>
           </div>
         )}
 
@@ -97,7 +97,7 @@ function WorkspaceInner() {
           <div
             style={{
               height: 40,
-              borderBottom: "1px solid var(--color-border, #2a2a3e)",
+              borderBottom: "1px solid var(--color-border, #2d2d2d)",
               display: "flex",
               alignItems: "center",
               padding: "0 12px",
@@ -114,20 +114,18 @@ function WorkspaceInner() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 5,
+                gap: 0,
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
-                color: "#888",
-                fontSize: 12,
-                padding: "4px 6px",
+                padding: "2px 4px",
                 borderRadius: 4,
+                opacity: 0.85,
               }}
             >
-              <ArrowLeft size={14} />
-              Projects
+              <Image src="/logo.png" alt="OpenLabel" width={90} height={28} style={{ objectFit: "contain" }} />
             </button>
-            <span style={{ color: "#2a2a3e" }}>|</span>
+            <span style={{ color: "#2d2d2d" }}>|</span>
             <span style={{ fontWeight: 600, color: "#e0e0e0" }}>
               {activeProject?.name ?? "Loading…"}
             </span>

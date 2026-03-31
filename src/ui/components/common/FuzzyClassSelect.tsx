@@ -95,7 +95,7 @@ export function FuzzyClassSelect({ classes, value, onChange }: Props) {
           gap: 6,
           padding: "5px 8px",
           background: "#111",
-          border: "1px solid #2a2a3e",
+          border: "1px solid #2d2d2d",
           borderRadius: 4,
           color: "inherit",
           cursor: "pointer",
@@ -123,8 +123,8 @@ export function FuzzyClassSelect({ classes, value, onChange }: Props) {
             left: 0,
             right: 0,
             zIndex: 100,
-            background: "#16213e",
-            border: "1px solid #2a2a3e",
+            background: "#1c1c1c",
+            border: "1px solid #2d2d2d",
             borderRadius: 4,
             boxShadow: "0 8px 24px #00000066",
             display: "flex",
@@ -132,7 +132,7 @@ export function FuzzyClassSelect({ classes, value, onChange }: Props) {
           }}
         >
           {/* Search input */}
-          <div style={{ padding: "6px 8px", borderBottom: "1px solid #2a2a3e" }}>
+          <div style={{ padding: "6px 8px", borderBottom: "1px solid #2d2d2d" }}>
             <input
               ref={inputRef}
               type="text"
@@ -142,7 +142,7 @@ export function FuzzyClassSelect({ classes, value, onChange }: Props) {
               placeholder={`Search ${classes.length} classes…`}
               style={{
                 width: "100%",
-                background: "#0d0d1a",
+                background: "#0d0d0d",
                 border: "1px solid #333",
                 borderRadius: 3,
                 color: "inherit",
@@ -177,7 +177,7 @@ export function FuzzyClassSelect({ classes, value, onChange }: Props) {
                     gap: 8,
                     padding: "5px 10px",
                     cursor: "pointer",
-                    background: isHighlighted ? "#4363d822" : cls.id === value ? "#ffffff0a" : "transparent",
+                    background: isHighlighted ? "#F47B2022" : cls.id === value ? "#ffffff0a" : "transparent",
                     borderLeft: isHighlighted ? `3px solid ${cls.color}` : "3px solid transparent",
                     fontSize: 12,
                   }}
@@ -186,7 +186,7 @@ export function FuzzyClassSelect({ classes, value, onChange }: Props) {
                     style={{ width: 10, height: 10, borderRadius: 2, background: cls.color, flexShrink: 0 }}
                   />
                   <span style={{ flex: 1 }}>{cls.name}</span>
-                  {cls.id === value && <span style={{ color: "#4363d8", fontSize: 10 }}>✓</span>}
+                  {cls.id === value && <span style={{ color: "#F47B20", fontSize: 10 }}>✓</span>}
                 </div>
               );
             })}

@@ -26,15 +26,15 @@ export function AnnotationPanel() {
     flexShrink: 0,
     display: "flex",
     flexDirection: "column",
-    borderLeft: "1px solid var(--color-border, #2a2a3e)",
-    background: "var(--color-surface, #16213e)",
+    borderLeft: "1px solid var(--color-border, #2d2d2d)",
+    background: "var(--color-surface, #1c1c1c)",
     overflow: "hidden",
   };
 
   return (
     <aside aria-label="Annotation panel" style={panelStyle}>
       {/* Header: export + help */}
-      <div style={{ padding: "8px 10px", borderBottom: "1px solid var(--color-border, #2a2a3e)", display: "flex", gap: 6 }}>
+      <div style={{ padding: "8px 10px", borderBottom: "1px solid var(--color-border, #2d2d2d)", display: "flex", gap: 6 }}>
         <button
           type="button"
           onClick={() => doExport()}
@@ -42,7 +42,7 @@ export function AnnotationPanel() {
           style={{
             flex: 1,
             padding: "7px 0",
-            background: "#4363d8",
+            background: "#F47B20",
             color: "#fff",
             border: "none",
             borderRadius: 5,
@@ -64,7 +64,7 @@ export function AnnotationPanel() {
             alignItems: "center",
             justifyContent: "center",
             background: "transparent",
-            border: "1px solid #2a2a3e",
+            border: "1px solid #2d2d2d",
             borderRadius: 5,
             cursor: "pointer",
             color: "#888",
@@ -98,7 +98,7 @@ export function AnnotationPanel() {
       {/* Tabs */}
       <div
         role="tablist"
-        style={{ display: "flex", borderBottom: "1px solid var(--color-border, #2a2a3e)" }}
+        style={{ display: "flex", borderBottom: "1px solid var(--color-border, #2d2d2d)" }}
       >
         {(["classes", "stack", "box"] as Tab[]).map((t) => (
           <button
@@ -114,8 +114,8 @@ export function AnnotationPanel() {
               fontWeight: tab === t ? 700 : 400,
               background: "transparent",
               border: "none",
-              borderBottom: tab === t ? "2px solid var(--color-primary, #4363d8)" : "2px solid transparent",
-              color: tab === t ? "var(--color-primary, #4363d8)" : "#888",
+              borderBottom: tab === t ? "2px solid var(--color-primary, #F47B20)" : "2px solid transparent",
+              color: tab === t ? "var(--color-primary, #F47B20)" : "#888",
               cursor: "pointer",
             }}
           >
@@ -178,7 +178,7 @@ function ImageReviewControls({
 
   const states: (typeof reviewState)[] = ["complete", "incomplete", "negative"];
   return (
-    <div style={{ padding: "8px 10px", borderTop: "1px solid var(--color-border, #2a2a3e)" }}>
+    <div style={{ padding: "8px 10px", borderTop: "1px solid var(--color-border, #2d2d2d)" }}>
       <div style={{ fontSize: 11, color: "#888", marginBottom: 4 }}>Image status</div>
       <div style={{ display: "flex", gap: 4 }}>
         {states.map((s) => (
@@ -192,9 +192,9 @@ function ImageReviewControls({
               padding: "4px 0",
               fontSize: 10,
               borderRadius: 3,
-              border: reviewState === s ? "1px solid #4363d8" : "1px solid #2a2a3e",
-              background: reviewState === s ? "#4363d822" : "transparent",
-              color: reviewState === s ? "#4363d8" : "#888",
+              border: reviewState === s ? "1px solid #F47B20" : "1px solid #2d2d2d",
+              background: reviewState === s ? "#F47B2022" : "transparent",
+              color: reviewState === s ? "#F47B20" : "#888",
               cursor: "pointer",
             }}
           >

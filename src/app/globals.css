@@ -5,15 +5,15 @@
 }
 
 :root {
-  --color-bg: #0f0f1a;
-  --color-surface: #16213e;
-  --color-surface-active: #1e2d50;
-  --color-border: #2a2a3e;
-  --color-primary: #4363d8;
+  --color-bg: #0f0f0f;
+  --color-surface: #1c1c1c;
+  --color-surface-active: #252525;
+  --color-border: #2d2d2d;
+  --color-primary: #F47B20;
   --color-text: #e0e0e0;
   --color-text-muted: #888;
   --color-error: #e6194b;
-  --color-canvas-bg: #1a1a2e;
+  --color-canvas-bg: #111111;
 }
 
 html,

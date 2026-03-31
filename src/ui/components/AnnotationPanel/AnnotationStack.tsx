@@ -43,8 +43,8 @@ export function AnnotationStack({ annotations }: Props) {
               gap: 4,
               padding: "4px 6px",
               borderRadius: 4,
-              border: isSelected ? `1px solid ${cls?.color ?? "#4363d8"}` : "1px solid transparent",
-              background: isSelected ? `${cls?.color ?? "#4363d8"}18` : "transparent",
+              border: isSelected ? `1px solid ${cls?.color ?? "#F47B20"}` : "1px solid transparent",
+              background: isSelected ? `${cls?.color ?? "#F47B20"}18` : "transparent",
               cursor: "pointer",
             }}
             onClick={() => selectBox(ann.id)}

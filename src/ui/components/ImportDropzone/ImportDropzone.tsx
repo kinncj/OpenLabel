@@ -30,17 +30,17 @@ export function ImportDropzone({ onImported }: Props) {
       role="button"
       aria-busy={importing}
       style={{
-        border: `2px dashed ${isDragActive ? "#4363d8" : "#2a2a3e"}`,
+        border: `2px dashed ${isDragActive ? "#F47B20" : "#2d2d2d"}`,
         borderRadius: 8,
         padding: "32px 24px",
         textAlign: "center",
         cursor: importing ? "wait" : "pointer",
-        background: isDragActive ? "#4363d811" : "transparent",
+        background: isDragActive ? "#F47B2011" : "transparent",
         transition: "border-color 0.15s, background 0.15s",
       }}
     >
       <input {...getInputProps()} aria-label="Select zip file" />
-      <p style={{ fontSize: 14, color: isDragActive ? "#4363d8" : "#888", margin: 0 }}>
+      <p style={{ fontSize: 14, color: isDragActive ? "#F47B20" : "#888", margin: 0 }}>
         {importing
           ? "Importing…"
           : isDragActive

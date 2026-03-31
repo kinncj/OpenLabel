@@ -1,4 +1,6 @@
-# openlabel
+<p align="center">
+  <img src="assets/openlabel_white_bg_logo.png" alt="OpenLabel" width="280" />
+</p>
 
 Browser-only YOLO detection dataset annotator. No backend, no accounts, no upload. Your images stay on your machine — everything lives in IndexedDB.
 

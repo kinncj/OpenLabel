@@ -51,8 +51,8 @@ export function ImageSidebar() {
         flexShrink: 0,
         display: "flex",
         flexDirection: "column",
-        borderRight: "1px solid var(--color-border, #2a2a3e)",
-        background: "var(--color-surface, #16213e)",
+        borderRight: "1px solid var(--color-border, #2d2d2d)",
+        background: "var(--color-surface, #1c1c1c)",
         overflow: "hidden",
       }}
     >
@@ -76,7 +76,7 @@ export function ImageSidebar() {
             justifyContent: "center",
             gap: 6,
             padding: "7px 0",
-            background: "#4363d8",
+            background: "#F47B20",
             color: "#fff",
             border: "none",
             borderRadius: 5,
@@ -94,7 +94,7 @@ export function ImageSidebar() {
       <div
         role="tablist"
         aria-label="Filter by split"
-        style={{ display: "flex", borderBottom: "1px solid var(--color-border, #2a2a3e)", marginTop: 8 }}
+        style={{ display: "flex", borderBottom: "1px solid var(--color-border, #2d2d2d)", marginTop: 8 }}
       >
         {splitTabs.map((t) => (
           <button
@@ -114,7 +114,7 @@ export function ImageSidebar() {
       <div
         role="tablist"
         aria-label="Filter by status"
-        style={{ display: "flex", borderBottom: "1px solid var(--color-border, #2a2a3e)" }}
+        style={{ display: "flex", borderBottom: "1px solid var(--color-border, #2d2d2d)" }}
       >
         {reviewTabs.map((t) => (
           <button
@@ -161,7 +161,7 @@ export function ImageSidebar() {
       </div>
 
       {/* Footer count */}
-      <div style={{ padding: "6px 10px", fontSize: 11, color: "#666", borderTop: "1px solid var(--color-border, #2a2a3e)" }}>
+      <div style={{ padding: "6px 10px", fontSize: 11, color: "#666", borderTop: "1px solid var(--color-border, #2d2d2d)" }}>
         {filtered.length} of {activeProject.images.length} images
       </div>
     </aside>
@@ -176,8 +176,8 @@ function tabStyle(active: boolean): React.CSSProperties {
     fontWeight: active ? 700 : 400,
     background: "transparent",
     border: "none",
-    borderBottom: active ? "2px solid var(--color-primary, #4363d8)" : "2px solid transparent",
-    color: active ? "var(--color-primary, #4363d8)" : "#888",
+    borderBottom: active ? "2px solid var(--color-primary, #F47B20)" : "2px solid transparent",
+    color: active ? "var(--color-primary, #F47B20)" : "#888",
     cursor: "pointer",
   };
 }

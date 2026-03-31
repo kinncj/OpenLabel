@@ -5,7 +5,7 @@ import { useCanvasStore } from "@/ui/stores/canvasStore";
 import { useClasses } from "@/ui/hooks/useClasses";
 import { CLASS_PACKS } from "@/common/domain/classes/registry";
 
-const DEFAULT_CUSTOM_COLOR = "#4363d8";
+const DEFAULT_CUSTOM_COLOR = "#F47B20";
 
 export function ClassManager() {
   const { activeClassId, setActiveClass } = useCanvasStore();
@@ -208,7 +208,7 @@ export function ClassManager() {
               value={customColor}
               onChange={(e) => setCustomColor(e.target.value)}
               title="Pick color"
-              style={{ width: 32, height: 28, padding: 2, border: "1px solid #333", borderRadius: 4, background: "#1a1a2e", cursor: "pointer", flexShrink: 0 }}
+              style={{ width: 32, height: 28, padding: 2, border: "1px solid #333", borderRadius: 4, background: "#111111", cursor: "pointer", flexShrink: 0 }}
             />
           </div>
           <div style={{ display: "flex", gap: 4 }}>
@@ -241,7 +241,7 @@ const selectStyle: React.CSSProperties = {
   flex: 1,
   padding: "4px 6px",
   fontSize: 12,
-  background: "#0d0d1a",
+  background: "#0d0d0d",
   color: "#ccc",
   border: "1px solid #333",
   borderRadius: 4,
@@ -252,7 +252,7 @@ const inputStyle: React.CSSProperties = {
   flex: 1,
   padding: "4px 6px",
   fontSize: 12,
-  background: "#0d0d1a",
+  background: "#0d0d0d",
   color: "#ccc",
   border: "1px solid #333",
   borderRadius: 4,
@@ -262,7 +262,7 @@ const inputStyle: React.CSSProperties = {
 const btnStyle: React.CSSProperties = {
   padding: "4px 8px",
   fontSize: 12,
-  background: "#4363d8",
+  background: "#F47B20",
   color: "#fff",
   border: "none",
   borderRadius: 4,

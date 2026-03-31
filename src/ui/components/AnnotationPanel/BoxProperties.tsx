@@ -63,7 +63,7 @@ export function BoxProperties() {
                   gap: 8,
                   padding: "6px 8px",
                   borderRadius: 5,
-                  border: active ? `1px solid ${color}` : "1px solid #2a2a3e",
+                  border: active ? `1px solid ${color}` : "1px solid #2d2d2d",
                   background: active ? `${color}20` : "transparent",
                   color: active ? color : "#888",
                   cursor: "pointer",
@@ -108,7 +108,7 @@ export function BoxProperties() {
           rows={2}
           style={{
             background: "#111",
-            border: "1px solid #2a2a3e",
+            border: "1px solid #2d2d2d",
             borderRadius: 4,
             color: "inherit",
             padding: "5px 7px",
@@ -157,7 +157,7 @@ function ToggleButton({
         gap: 5,
         padding: "5px 0",
         borderRadius: 4,
-        border: pressed ? `1px solid ${activeColor}` : "1px solid #2a2a3e",
+        border: pressed ? `1px solid ${activeColor}` : "1px solid #2d2d2d",
         background: pressed ? `${activeColor}20` : "transparent",
         color: pressed ? activeColor : "#666",
         cursor: "pointer",

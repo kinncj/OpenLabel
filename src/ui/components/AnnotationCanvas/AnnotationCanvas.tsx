@@ -80,7 +80,7 @@ export function AnnotationCanvas({ image, blobUrl }: Props) {
   return (
     <div
       ref={containerRef}
-      style={{ flex: 1, overflow: "hidden", background: "var(--color-canvas-bg, #1a1a2e)", position: "relative", cursor: canvasCursor }}
+      style={{ flex: 1, overflow: "hidden", background: "var(--color-canvas-bg, #111111)", position: "relative", cursor: canvasCursor }}
     >
       {/* Toolbar */}
       <div
@@ -93,8 +93,8 @@ export function AnnotationCanvas({ image, blobUrl }: Props) {
           display: "flex",
           alignItems: "center",
           gap: 2,
-          background: "#0d1229ee",
-          border: "1px solid #2a2a3e",
+          background: "#111111ee",
+          border: "1px solid #2d2d2d",
           borderRadius: 8,
           padding: "4px 6px",
           backdropFilter: "blur(4px)",
@@ -113,7 +113,7 @@ export function AnnotationCanvas({ image, blobUrl }: Props) {
           </ToolBtn>
         ))}
 
-        <div style={{ width: 1, height: 20, background: "#2a2a3e", margin: "0 4px" }} />
+        <div style={{ width: 1, height: 20, background: "#2d2d2d", margin: "0 4px" }} />
 
         {/* Zoom out */}
         <ToolBtn
@@ -211,9 +211,9 @@ function ToolBtn({
         width: 30,
         height: 30,
         borderRadius: 6,
-        border: active ? "1px solid #4363d8" : "1px solid transparent",
-        background: active ? "#4363d822" : "transparent",
-        color: active ? "#4363d8" : "#aaa",
+        border: active ? "1px solid #F47B20" : "1px solid transparent",
+        background: active ? "#F47B2022" : "transparent",
+        color: active ? "#F47B20" : "#aaa",
         cursor: "pointer",
         padding: 0,
       }}

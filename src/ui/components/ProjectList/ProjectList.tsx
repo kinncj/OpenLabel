@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProject } from "@/ui/hooks/useProject";
 import { useUiStore } from "@/ui/stores/uiStore";
@@ -38,7 +39,7 @@ export function ProjectList() {
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 24px" }}>
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
-        <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>openlabel</h1>
+        <Image src="/logo.png" alt="OpenLabel" width={160} height={50} style={{ objectFit: "contain" }} priority />
         <div style={{ display: "flex", gap: 10 }}>
           <button
             type="button"
@@ -139,7 +140,7 @@ export function ProjectList() {
 
 const primaryBtn: React.CSSProperties = {
   padding: "8px 16px",
-  background: "#4363d8",
+  background: "#F47B20",
   color: "#fff",
   border: "none",
   borderRadius: 5,
@@ -152,7 +153,7 @@ const secondaryBtn: React.CSSProperties = {
   padding: "8px 16px",
   background: "transparent",
   color: "#ccc",
-  border: "1px solid #2a2a3e",
+  border: "1px solid #2d2d2d",
   borderRadius: 5,
   cursor: "pointer",
   fontSize: 13,
@@ -160,7 +161,7 @@ const secondaryBtn: React.CSSProperties = {
 
 const inputStyle: React.CSSProperties = {
   background: "#111",
-  border: "1px solid #2a2a3e",
+  border: "1px solid #2d2d2d",
   borderRadius: 4,
   color: "inherit",
   padding: "6px 8px",
@@ -178,8 +179,8 @@ const dialogOverlay: React.CSSProperties = {
 };
 
 const dialogBox: React.CSSProperties = {
-  background: "#16213e",
-  border: "1px solid #2a2a3e",
+  background: "#1c1c1c",
+  border: "1px solid #2d2d2d",
   borderRadius: 10,
   padding: "24px",
   width: "min(480px, 90vw)",

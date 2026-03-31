@@ -17,8 +17,8 @@ export function ProjectCard({ project, onOpen }: Props) {
   return (
     <div
       style={{
-        background: "var(--color-surface, #16213e)",
-        border: "1px solid var(--color-border, #2a2a3e)",
+        background: "var(--color-surface, #1c1c1c)",
+        border: "1px solid var(--color-border, #2d2d2d)",
         borderRadius: 8,
         padding: "16px",
         display: "flex",
@@ -73,7 +73,7 @@ export function ProjectCard({ project, onOpen }: Props) {
         onClick={() => onOpen(project.id)}
         style={{
           padding: "6px 0",
-          background: "#4363d8",
+          background: "#F47B20",
           color: "#fff",
           border: "none",
           borderRadius: 5,

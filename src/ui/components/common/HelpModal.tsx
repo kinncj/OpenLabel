@@ -44,9 +44,9 @@ export function HelpModal({ onClose }: Props) {
     >
       <div
         style={{
-          background: "#16213e",
+          background: "#1c1c1c",
           borderRadius: 10,
-          border: "1px solid #2a2a3e",
+          border: "1px solid #2d2d2d",
           width: "100%",
           maxWidth: 560,
           maxHeight: "85vh",
@@ -75,7 +75,7 @@ export function HelpModal({ onClose }: Props) {
             {steps.map((step, i) => (
               <li key={i} style={{ fontSize: 13, lineHeight: 1.5 }}>
                 <span style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                  <step.Icon size={18} weight="duotone" color="#4363d8" style={{ flexShrink: 0, marginTop: 1 }} />
+                  <step.Icon size={18} weight="duotone" color="#F47B20" style={{ flexShrink: 0, marginTop: 1 }} />
                   <span>
                     <strong>{step.label}</strong>
                     {" — "}
@@ -93,7 +93,7 @@ export function HelpModal({ onClose }: Props) {
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
             <tbody>
               {shortcuts.map(([key, desc]) => (
-                <tr key={key} style={{ borderBottom: "1px solid #2a2a3e" }}>
+                <tr key={key} style={{ borderBottom: "1px solid #2d2d2d" }}>
                   <td style={{ padding: "5px 0", width: 120 }}>
                     <kbd style={kbdStyle}>{key}</kbd>
                   </td>
@@ -151,7 +151,7 @@ const sectionTitle: React.CSSProperties = {
 
 const kbdStyle: React.CSSProperties = {
   display: "inline-block",
-  background: "#0d0d1a",
+  background: "#0d0d0d",
   border: "1px solid #444",
   borderRadius: 4,
   padding: "2px 6px",
