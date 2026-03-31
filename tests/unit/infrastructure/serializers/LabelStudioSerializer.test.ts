@@ -73,7 +73,7 @@ describe("LabelStudioSerializer", () => {
     const project = makeProject({ classes: [makeClass(0, "cat")], images: [image] });
 
     const tasks = parse(serializeToLabelStudio(project));
-    const value = tasks[0].annotations[0].result[0].value;
+    const value = tasks[0].predictions[0].result[0].value;
 
     expect(value.x).toBeCloseTo(30);
     expect(value.y).toBeCloseTo(20);
@@ -90,7 +90,7 @@ describe("LabelStudioSerializer", () => {
     });
 
     const tasks = parse(serializeToLabelStudio(project));
-    const label = tasks[0].annotations[0].result[0].value.rectanglelabels[0];
+    const label = tasks[0].predictions[0].result[0].value.rectanglelabels[0];
     expect(label).toBe("dog");
   });
 
@@ -100,7 +100,7 @@ describe("LabelStudioSerializer", () => {
     const project = makeProject({ classes: [], images: [image] });
 
     const tasks = parse(serializeToLabelStudio(project));
-    const label = tasks[0].annotations[0].result[0].value.rectanglelabels[0];
+    const label = tasks[0].predictions[0].result[0].value.rectanglelabels[0];
     expect(label).toBe("class_99");
   });
 
@@ -111,7 +111,7 @@ describe("LabelStudioSerializer", () => {
     const project = makeProject({ classes: [makeClass(0, "cat")], images: [image] });
 
     const tasks = parse(serializeToLabelStudio(project));
-    expect(tasks[0].annotations[0].result).toHaveLength(1);
+    expect(tasks[0].predictions[0].result).toHaveLength(1);
   });
 
   it("excludes ignore boxes from serialized results", () => {
@@ -121,7 +121,7 @@ describe("LabelStudioSerializer", () => {
     const project = makeProject({ classes: [makeClass(0, "cat")], images: [image] });
 
     const tasks = parse(serializeToLabelStudio(project));
-    expect(tasks[0].annotations[0].result).toHaveLength(1);
+    expect(tasks[0].predictions[0].result).toHaveLength(1);
   });
 
   it("produces an empty task list for a project with no images", () => {
@@ -138,7 +138,7 @@ describe("LabelStudioSerializer", () => {
 
     const tasks = parse(serializeToLabelStudio(project));
     expect(tasks).toHaveLength(1);
-    expect(tasks[0].annotations[0].result).toHaveLength(0);
+    expect(tasks[0].predictions[0].result).toHaveLength(0);
   });
 
   it("serializes multiple images with multiple tp boxes each", () => {
@@ -159,9 +159,9 @@ describe("LabelStudioSerializer", () => {
     const tasks = parse(serializeToLabelStudio(project));
     expect(tasks).toHaveLength(2);
     expect(tasks[0].data.image).toBe("images/train/a.jpg");
-    expect(tasks[0].annotations[0].result).toHaveLength(2);
+    expect(tasks[0].predictions[0].result).toHaveLength(2);
     expect(tasks[1].data.image).toBe("images/train/b.jpg");
-    expect(tasks[1].annotations[0].result).toHaveLength(1);
+    expect(tasks[1].predictions[0].result).toHaveLength(1);
   });
 
   it("includes original_width and original_height from the image record", () => {
@@ -170,7 +170,7 @@ describe("LabelStudioSerializer", () => {
     const project = makeProject({ classes: [makeClass(0, "cat")], images: [image] });
 
     const tasks = parse(serializeToLabelStudio(project));
-    const result = tasks[0].annotations[0].result[0];
+    const result = tasks[0].predictions[0].result[0];
     expect(result.original_width).toBe(1920);
     expect(result.original_height).toBe(1080);
   });
@@ -186,11 +186,11 @@ describe("LabelStudioSerializer", () => {
     expect(tasks[1].id).toBe(2);
   });
 
-  it("sets was_cancelled=false on every annotation", () => {
+  it("sets model_version to OpenLabel on every prediction", () => {
     const image = makeImage({ fileName: "img.jpg", annotations: [makeBox({ classId: 0 })] });
     const project = makeProject({ classes: [makeClass(0, "cat")], images: [image] });
     const tasks = parse(serializeToLabelStudio(project));
-    expect(tasks[0].annotations[0].was_cancelled).toBe(false);
+    expect(tasks[0].predictions[0].model_version).toBe("OpenLabel");
   });
 
   it("outputs valid JSON", () => {

@@ -84,9 +84,48 @@ export async function exportDataset(
     entries.set("data.yaml", serializeToDataYaml(fullProject, hasTest));
   }
 
-  // Label Studio JSON
+  // Label Studio JSON (predictions format)
   if (project.exportOptions.includeLabelStudio) {
     entries.set("labelstudio.json", serializeToLabelStudio(fullProject));
+
+    // Helper script: rewrites relative image paths to http://localhost:PORT/…
+    const lsImport = [
+      "#!/usr/bin/env python3",
+      '"""',
+      "Label Studio import helper.",
+      "",
+      "Steps:",
+      "  1. Extract the OpenLabel zip into a directory.",
+      "  2. Run this script from that directory:",
+      "       python ls_import.py           # default port 8080",
+      "       python ls_import.py 9000      # custom port",
+      "  3. Start the image server in the same directory:",
+      "       python -m http.server 8080",
+      "  4. Import labelstudio_local.json into Label Studio.",
+      '"""',
+      "import json, sys",
+      "from pathlib import Path",
+      "",
+      "PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080",
+      "HERE = Path(__file__).parent",
+      "",
+      'with open(HERE / "labelstudio.json") as f:',
+      "    tasks = json.load(f)",
+      "",
+      "for task in tasks:",
+      "    rel = task[\"data\"][\"image\"]",
+      '    task["data"]["image"] = f"http://localhost:{PORT}/{rel}"',
+      "",
+      'out = HERE / "labelstudio_local.json"',
+      "with open(out, \"w\") as f:",
+      "    json.dump(tasks, f, indent=2)",
+      "",
+      "print(f'Wrote {out}')",
+      "print(f'Now run: python -m http.server {PORT}')",
+      "print(f'Then import labelstudio_local.json into Label Studio.')",
+      "",
+    ].join("\n");
+    entries.set("ls_import.py", lsImport);
   }
 
   // Python quickstart script (Ultralytics YOLO)

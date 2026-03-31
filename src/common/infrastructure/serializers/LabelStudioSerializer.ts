@@ -2,9 +2,15 @@ import type { Project } from "@/common/domain/dataset/types";
 import type { BoxAnnotation } from "@/common/domain/annotations/types";
 import type { ClassDef } from "@/common/domain/classes/types";
 
-// Label Studio JSON export format — object detection (RectangleLabels)
+// Label Studio pre-annotation format using the "predictions" key.
+// https://labelstud.io/guide/predictions.html
+//
 // Coordinates: x, y are top-left as % of image dimensions (0–100)
-// Our format: x, y are center as normalized 0–1
+// Our format:  x, y are center as normalized 0–1
+//
+// data.image uses relative paths (images/{split}/{fileName}).
+// Use ls_import.py from the zip to rewrite them to http://localhost:PORT/…
+// before importing into Label Studio.
 
 type LSValue = {
   x: number;
@@ -26,15 +32,15 @@ type LSResult = {
   image_rotation: number;
 };
 
-type LSAnnotation = {
+type LSPrediction = {
+  model_version: string;
   result: LSResult[];
-  was_cancelled: boolean;
 };
 
 type LSTask = {
   id: number;
   data: { image: string };
-  annotations: LSAnnotation[];
+  predictions: LSPrediction[];
 };
 
 function boxToResult(
@@ -73,7 +79,6 @@ export function serializeToLabelStudio(project: Project): string {
     let resultIdx = 0;
 
     for (const ann of image.annotations) {
-      // Only export tp boxes (same rule as NDJSON training export)
       if (ann.review !== "tp") continue;
       results.push(boxToResult(ann, classMap, image.width, image.height, resultIdx++));
     }
@@ -81,7 +86,7 @@ export function serializeToLabelStudio(project: Project): string {
     return {
       id: taskIdx + 1,
       data: { image: `images/${image.split}/${image.fileName}` },
-      annotations: [{ result: results, was_cancelled: false }],
+      predictions: [{ model_version: "OpenLabel", result: results }],
     };
   });
 
