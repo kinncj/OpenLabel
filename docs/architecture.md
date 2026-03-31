@@ -34,25 +34,25 @@ C4Context
 block-beta
   columns 1
 
-  block:ui["UI layer  (app-openlabel/ui)"]
+  block:ui["UI layer  (src/ui)"]
     a["Components\n(React, SVG canvas)"]
     b["Hooks\n(useCanvas, useClasses, …)"]
     c["Stores\n(Zustand)"]
   end
 
-  block:app["Application layer  (app-openlabel/common/application)"]
+  block:app["Application layer  (src/common/application)"]
     d["Use-cases\n(ExportDataset, ImportDataset, CreateProject, …)"]
     e["Services\n(HashService, SplitPolicy, AutoSave)"]
   end
 
-  block:infra["Infrastructure layer  (app-openlabel/common/infrastructure)"]
+  block:infra["Infrastructure layer  (src/common/infrastructure)"]
     f["Repositories\n(ProjectRepository, ImageRepository, BlobRepository)"]
     g["Serializers\n(NDJSON, YOLO txt, YAML, Label Studio)"]
     h["Parsers\n(NDJSON, YOLO txt, Label Studio)"]
     i["Zip I/O\n(ZipReader, ZipWriter via fflate)"]
   end
 
-  block:domain["Domain layer  (app-openlabel/common/domain)"]
+  block:domain["Domain layer  (src/common/domain)"]
     j["Types\n(Project, ImageRecord, BoxAnnotation, ClassDef)"]
     k["Schemas\n(Zod validators)"]
     l["Class packs\n(COCO, LVIS, OIV7, …)"]
@@ -72,7 +72,7 @@ block-beta
 
 ```mermaid
 graph TD
-    subgraph Pages["app/ (Next.js routing)"]
+    subgraph Pages["src/app/ (Next.js routing)"]
         Home["/ — ProjectList"]
         Workspace["/workspace?id= — WorkspaceClient"]
     end
@@ -203,13 +203,13 @@ sequenceDiagram
 
 ```
 /
-├── app/                          Next.js App Router (routing only)
-│   ├── page.tsx                  → ProjectList
-│   └── workspace/
-│       ├── page.tsx
-│       └── WorkspaceClient.tsx   → full annotation workspace
-│
-├── app-openlabel/                business repo root
+├── src/                          business repo root (Next.js src/ convention)
+│   ├── app/                      Next.js App Router (routing only)
+│   │   ├── page.tsx              → ProjectList
+│   │   └── workspace/
+│   │       ├── page.tsx
+│   │       └── WorkspaceClient.tsx   → full annotation workspace
+│   │
 │   ├── common/
 │   │   ├── domain/
 │   │   │   ├── annotations/      BoxAnnotation, review states
@@ -245,8 +245,8 @@ sequenceDiagram
 ├── infra/
 │   └── hosting/
 │
-└── tsconfig.json                 @/* → ./app-openlabel/*
+└── tsconfig.json                 @/* → ./src/*
 ```
 
-> **Path alias:** `@/*` maps to `./app-openlabel/*` in both `tsconfig.json` and `vitest.config.ts`.
-> There are no `@/app/...` imports — intra-`app/` references use relative paths.
+> **Path alias:** `@/*` maps to `./src/*` in both `tsconfig.json` and `vitest.config.ts`.
+> There are no `@/app/...` imports — intra-`src/app/` references use relative paths.

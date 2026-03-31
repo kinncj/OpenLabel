@@ -1,4 +1,4 @@
-# ADR 005 — Business repo structure (`app-openlabel/`)
+# ADR 005 — Business repo structure (`src/`)
 
 **Status:** Accepted
 
@@ -8,10 +8,11 @@ The Next.js `app/` directory is reserved for routing. All business logic — dom
 
 ## Decision
 
-All business and UI code lives under `app-openlabel/`:
+All business and UI code lives under `src/`, using the Next.js built-in `src/` directory convention. The Next.js App Router is at `src/app/`, which Next.js discovers natively — no separate `app/` folder at the repo root:
 
 ```
-app-openlabel/
+src/
+  app/             # Next.js App Router (routing and page shells, no domain logic)
   common/
     domain/          # types, Zod schemas, class packs
     application/     # use-cases, services
@@ -24,13 +25,11 @@ app-openlabel/
     layouts/
 ```
 
-`app/` remains Next.js App Router only (routing and page shells, no domain logic).
-
-The TypeScript path alias `@/*` is mapped to `./app-openlabel/*` in `tsconfig.json` and `vitest.config.ts`, so all existing `@/common/…` and `@/ui/…` imports continue to work without change.
+The TypeScript path alias `@/*` is mapped to `./src/*` in `tsconfig.json` and `vitest.config.ts`, so all existing `@/common/…` and `@/ui/…` imports continue to work without change.
 
 ## Consequences
 
-- Any new domain, application, infrastructure, or UI file goes under `app-openlabel/` — never at the repo root.
-- Intra-`app/` page imports use relative paths, not `@/`.
-- The mapping `@/* → app-openlabel/*` must be kept in sync between `tsconfig.json` and `vitest.config.ts`.
+- Any new domain, application, infrastructure, or UI file goes under `src/` — never at the repo root.
+- Intra-`src/app/` page imports use relative paths, not `@/`.
+- The mapping `@/* → src/*` must be kept in sync between `tsconfig.json` and `vitest.config.ts`.
 - The `.next/` cache must be cleared after changing the alias (stale Webpack artifacts will reference the old path).

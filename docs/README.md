@@ -9,7 +9,7 @@
 | [ADR 002](adr/002-ndjson-canonical-export.md) | Why NDJSON is the canonical format |
 | [ADR 003](adr/003-sidecar-metadata.md) | Why UI state lives in `meta/project.json` |
 | [ADR 004](adr/004-browser-only-persistence.md) | Why IndexedDB, no backend |
-| [ADR 005](adr/005-business-repo-structure.md) | Why `app-openlabel/` wraps domain + UI |
+| [ADR 005](adr/005-business-repo-structure.md) | Why `src/` wraps domain + UI |
 | [ADR 006](adr/006-label-studio-compatibility.md) | Label Studio import/export strategy |
 
 ---
